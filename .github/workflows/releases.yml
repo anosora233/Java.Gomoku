@@ -1,0 +1,35 @@
+name: Build and Release
+
+on:
+  workflow_dispatch:
+  push:
+    branch:
+    - main
+    paths:
+    - src/*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout codebase
+        uses: actions/checkout@v3
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'oracle' 
+          java-version: '17'
+
+      - name: Build Jar 
+        run: source build.sh
+
+      - name: Upload files to Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: Gomoku Jar
+          path: Gomoku.jar
+
+
+
+
